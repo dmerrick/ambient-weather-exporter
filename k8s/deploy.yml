@@ -20,8 +20,11 @@ spec:
         imagePullPolicy: Always
         ports:
           - name: prometrics
-            containerPort: 9093
+            containerPort: 8000
         env:
+        # this is added in front of all metrics
+         - name: PROM_PREFIX
+           value: "weather"
          - name: AMBIENT_API_KEY
            valueFrom:
              secretKeyRef:
