@@ -8,14 +8,9 @@ from ambient_api.ambientapi import AmbientAPI
 from prometheus_client import Info, Gauge
 from prometheus_client import start_http_server
 
-# Overall stuff left to do:
-#  - handle multiple and zero devices better
-#  - push bugfixes upstream
-#  - experiment with changing unit settings in my profile
-#  - work build and device information into prom metrics
-#  - local testing interface / method?
-
 api = AmbientAPI()
+gauges = []
+
 if not api.api_key:
     raise Exception("You must specify an API Key")
 if not api.application_key:
@@ -26,9 +21,6 @@ i = Info(
     "Prometheus exporter for Ambient Weather personal weather station",
 ).info({"version": "0"})
 
-
-
-gauges = []
 
 def new_gauge(prom_name):
     global gauges
@@ -56,14 +48,16 @@ def get_device():
     )  # FIXME: add mac address as an instance parameter on all fields
     return device
 
+
 def set_up_guages(device):
     last_data = device.last_data
     for key, value in last_data.items():
-        if key in ["date", "dateutc", "loc","tz"]:
+        if key in ["date", "dateutc", "loc", "tz"]:
             print("skipping: " + key)
             continue
         # create the prometheus gauge
         new_gauge(key)
+
 
 device = get_device()
 set_up_guages(device)
@@ -76,9 +70,7 @@ while True:
     now = time.time()
     if last_data["dateutc"] / 1000 < now - 120:
         raise Exception(
-            "Stale data from Ambient API; dateutc={}, now={}".format(
-                last_data["dateutc"], now
-            )
+            f"Stale data from Ambient API; dateutc={last_data['dateutc']}, now={now}"
         )
     print(last_data)
     for gauge in gauges:
