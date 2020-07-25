@@ -1,7 +1,7 @@
 # ambient-weather-exporter
 Prometheus exporter for an Ambient Weather station as reported from their API
 
-This little project is a messy hack, but it works against my [WS-2902](https://www.ambientweather.com/amws2902.html) which I've had for just a few weeks at the time I'm writing this. It may not work well for stations which ship less metrics to Ambient Weather.
+**This is a fork of [trickv/ambient-weather-exporter](https://github.com/trickv/ambient-weather-exporter/). @trickv deserves credit. This fork removes Celsius support and but should support more models of weather stations.**
 
 # Libraries
 
