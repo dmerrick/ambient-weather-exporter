@@ -4,12 +4,11 @@ LABEL maintainer "trick@vanstaveren.us"
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    python3 \
-    python3-virtualenv \
-    python3-pip \
-    python-virtualenv \
-    && \
-    virtualenv --python=python3 /app
+      python3 \
+      python3-virtualenv \
+      python3-pip \
+      python-virtualenv \
+    && virtualenv --python=python3 /app
 
 WORKDIR /app
 EXPOSE 8000
@@ -22,4 +21,4 @@ COPY test.py /app/test.py
 
 USER nobody
 
-ENTRYPOINT ["/app/bin/python", "/app/test.py"]
+ENTRYPOINT ["/app/bin/python3", "/app/entrypoint.py"]
