@@ -17,7 +17,7 @@ COPY requirements.pip requirements.pip
 
 RUN /app/bin/pip3 install -r requirements.pip
 
-COPY test.py /app/test.py
+COPY entrypoint.py /app/entrypoint.py
 
 USER nobody
 
