@@ -69,9 +69,8 @@ while True:
     last_data = device.last_data
     now = time.time()
     if last_data["dateutc"] / 1000 < now - 120:
-        raise Exception(
-            f"Stale data from Ambient API; dateutc={last_data['dateutc']}, now={now}"
-        )
+        print(f"Stale data from Ambient API; dateutc={last_data['dateutc']}, now={now}")
+        continue
     print(last_data)
     for gauge in gauges:
         if gauge._ambient_name in last_data:
