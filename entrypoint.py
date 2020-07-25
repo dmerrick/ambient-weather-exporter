@@ -33,6 +33,7 @@ i.info({"version": "0"})
 
 
 
+gauges = []
 
 def new_gauge(prom_name):
     if "PROM_PREFIX" in os.environ:
@@ -40,6 +41,7 @@ def new_gauge(prom_name):
     else:
         gauge = Gauge(prom_name, "")
     gauge._ambient_name = prom_name
+    gauges + [gauge]
     return gauge
 
 
@@ -161,23 +163,14 @@ def get_device():
 def set_up_guages(device):
     last_data = device.last_data
     for key, value in last_data.items():
-        print(key)
-        if key.startswith("temp"):
-            print("temperature found: " + key)
-            new_gauge(key)
-    # new_gauge(
-    #     "tempinf", "indoor_temperature_f", "Indoor Temperature (Degrees F)"
-    # ),  # FIXME: what if i change my prefs to C? Does it export in C?
-    # new_gauge("tempinc", "indoor_temperature", "Indoor Temperature (Degrees C)"),
-    # new_gauge("tempf", "outdoor_temperature_f", "Outdoor Temperature (Degrees F)"),
-    # new_gauge("tempc", "outdoor_temperature", "Outdoor Temperature (Degrees C)"),
-    # new_gauge("temp1f", "outdoor_temperature1_f", "Outdoor Temperature (Degrees F)"),
-    # new_gauge("temp1c", "outdoor_temperature1", "Outdoor Temperature (Degrees C)"),
-    # new_gauge("temp2f", "outdoor_temperature2_f", "Outdoor Temperature (Degrees F)"),
-    # new_gauge("temp2c", "outdoor_temperature2", "Outdoor Temperature (Degrees C)"),
-    exit(0)
-    
-        
+        if key in ["date", "dateutc", "loc"]:
+
+            print("skipping: " + key)
+            continue
+        # create the prometheus gauge
+        new_gauge(key)
+        # if key.startswith("temp"):
+        #     print("temperature found: " + key)
 
 device = get_device()
 set_up_guages(device)
