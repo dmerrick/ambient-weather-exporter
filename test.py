@@ -28,10 +28,7 @@ if not api.application_key:
 i = Info("ambient_weather_exporter", "Prometheus exporter for Ambient Weather personal weather station")
 i.info({'version': '0'})
 
-
-
-# {'dateutc': 1565188020000, 'tempinf': 77.7, 'humidityin': 54, 'baromrelin': 29.794, 'baromabsin': 29.103, 'tempf': 76.5, 'humidity': 60, 'winddir': 54, 'windspeedmph': 0, 'windgustmph': 0, 'maxdailygust': 1.1, 'hourlyrainin': 0, 'eventrainin': 0, 'dailyrainin': 0, 'weeklyrainin': 0.039, 'monthlyrainin': 0.15, 'totalrainin': 0.201, 'solarradiation': 48.56, 'uv': 0, 'feelsLike': 76.67, 'dewPoint': 61.56, 'lastRain': '2019-08-06T09:25:00.000Z', 'tz': 'America/Chicago', 'date': '2019-08-07T14:27:00.000Z'}
-
+# @trickv weather data
 # {
 # 'dateutc': 1565188020000,
 # 'tempinf': 77.7,
@@ -58,22 +55,23 @@ i.info({'version': '0'})
 # 'tz': 'America/Chicago',
 # 'date': '2019-08-07T14:27:00.000Z'}
 
+# @dmerrick weather data
 # {
-#         "batt1": 1,
-#         "batt2": 1,
-#         "battout": 1,
-#         "date": "2020-07-25T18:00:00.000Z",
-#         "dateutc": 1595700000000,
-#         "dewPoint2": 63.6,
-#         "dewPointin": 62.2,
-#         "feelsLike2": 94.6,
-#         "feelsLikein": 85.4,
-#         "humidity2": 38,
-#         "humidityin": 47,
-#         "loc": "ambient-prod-2020-30",
-#         "temp1f": 77.1,
-#         "temp2f": 93,
-#         "tempinf": 84.7
+# "batt1": 1,
+# "batt2": 1,
+# "battout": 1,
+# "date": "2020-07-25T18:00:00.000Z",
+# "dateutc": 1595700000000,
+# "dewPoint2": 63.6,
+# "dewPointin": 62.2,
+# "feelsLike2": 94.6,
+# "feelsLikein": 85.4,
+# "humidity2": 38,
+# "humidityin": 47,
+# "loc": "ambient-prod-2020-30",
+# "temp1f": 77.1,
+# "temp2f": 93,
+# "tempinf": 84.7
 # }
 
 
