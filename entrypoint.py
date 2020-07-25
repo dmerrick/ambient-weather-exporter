@@ -2,6 +2,7 @@
 
 import time
 import math
+import os
 
 from ambient_api.ambientapi import AmbientAPI
 from prometheus_client import Info, Gauge
@@ -32,8 +33,12 @@ i.info({"version": "0"})
 
 
 
+
 def new_gauge(ambient_name, prom_name, description):
-    gauge = Gauge("weather_" + prom_name, description)
+    if "PROM_PREFIX" in os.environ:
+        gauge = Gauge(f"{os.environ['PROM_PREFIX']}_{prom_name}", description)
+    else:
+        gauge = Gauge(prom_name, description)
     gauge._ambient_name = ambient_name
     return gauge
 
