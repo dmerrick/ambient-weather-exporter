@@ -70,6 +70,7 @@ while True:
     now = time.time()
     if last_data["dateutc"] / 1000 < now - 120:
         print(f"Stale data from Ambient API; dateutc={last_data['dateutc']}, now={now}")
+        sleep(10)
         continue
     print(last_data)
     for gauge in gauges:
