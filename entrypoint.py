@@ -61,7 +61,7 @@ def set_up_guages(device):
 
 device = get_device()
 set_up_guages(device)
-print(gauges)
+
 
 start_http_server(8001)
 
