@@ -58,23 +58,30 @@ def set_up_guages(device):
         # create the prometheus gauge
         new_gauge(key)
 
+previous_dateutc = ""
+
+def check_and_update(device):
+    global previous_dateutc
+    # fetch the weather data
+    response = device.last_data
+    print(response)
+
+    # check if data is the same as last time
+    if response["dateutc"] == previous_dateutc:
+        print("Stale data from Ambient API")
+        return
+    for gauge in gauges:
+        if gauge._ambient_name in response:
+            gauge.set(response[gauge._ambient_name])
+    # store the time from the last response
+    previous_dateutc = response["dateutc"]
 
 device = get_device()
 set_up_guages(device)
-
-
 start_http_server(8000)
 
 while True:
-    last_data = device.last_data
-    now = time.time()
-    print(last_data)
-    # if last_data["dateutc"] / 1000 < now - 120:
-    #     print(f"Stale data from Ambient API; dateutc={last_data['dateutc']}, now={now}")
-    #     time.sleep(30)
-    #     continue
-    for gauge in gauges:
-        if gauge._ambient_name in last_data:
-            gauge.set(last_data[gauge._ambient_name])
+    check_and_update(device)
     print("sleeping 60")
     time.sleep(60)
+
