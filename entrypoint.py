@@ -68,11 +68,11 @@ start_http_server(8000)
 while True:
     last_data = device.last_data
     now = time.time()
-    if last_data["dateutc"] / 1000 < now - 120:
-        print(f"Stale data from Ambient API; dateutc={last_data['dateutc']}, now={now}")
-        time.sleep(30)
-        continue
     print(last_data)
+    # if last_data["dateutc"] / 1000 < now - 120:
+    #     print(f"Stale data from Ambient API; dateutc={last_data['dateutc']}, now={now}")
+    #     time.sleep(30)
+    #     continue
     for gauge in gauges:
         if gauge._ambient_name in last_data:
             gauge.set(last_data[gauge._ambient_name])

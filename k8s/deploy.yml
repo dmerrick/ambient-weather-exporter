@@ -21,6 +21,14 @@ spec:
         ports:
           - name: prometrics
             containerPort: 8000
+        livenessProbe:
+          httpGet:
+            path: /metrics
+            port: prometrics
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 1
         env:
         # this is added in front of all metrics
          - name: PROM_PREFIX
