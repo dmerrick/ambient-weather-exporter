@@ -63,7 +63,7 @@ device = get_device()
 set_up_guages(device)
 
 
-start_http_server(8001)
+start_http_server(8000)
 
 while True:
     last_data = device.last_data
