@@ -29,6 +29,13 @@ spec:
           periodSeconds: 10
           timeoutSeconds: 3
           failureThreshold: 1
+        resources:
+          requests:
+            cpu: 1m
+            memory: 8Mi
+          limits:
+            cpu: 1m
+            memory: 8Mi
         env:
         # this is added in front of all metrics
          - name: PROM_PREFIX
