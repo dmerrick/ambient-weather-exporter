@@ -42,34 +42,36 @@ def get_device():
         exit(1)
     # FIXME: handle multiple devices
     device = devices[0]
-    print(device.info)
-    print(
-        device.mac_address
-    )  # FIXME: add mac address as an instance parameter on all fields
+    # print(device.info)
+    # print(
+    #     device.mac_address
+    # )  # FIXME: add mac address as an instance parameter on all fields
     return device
 
 
 def set_up_guages(device):
-    last_data = device.last_data
-    for key, value in last_data.items():
+    global previous_dateutc
+    response = device.last_data
+    previous_dateutc = response["dateutc"]
+    print(response)
+    for key, value in response.items():
         if key in ["date", "dateutc", "loc", "tz"]:
-            print("skipping: " + key)
+            print("not creating guage for " + key)
             continue
         # create the prometheus gauge
         new_gauge(key)
 
-previous_dateutc = ""
 
 def check_and_update(device):
     global previous_dateutc
     # fetch the weather data
     response = device.last_data
-    print(response)
 
     # check if data is the same as last time
     if response["dateutc"] == previous_dateutc:
         print("Stale data from Ambient API")
         return
+    print(response)
     for gauge in gauges:
         if gauge._ambient_name in response:
             gauge.set(response[gauge._ambient_name])
