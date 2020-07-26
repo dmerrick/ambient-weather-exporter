@@ -50,9 +50,7 @@ def get_device():
 
 
 def set_up_guages(device):
-    global previous_dateutc
     response = device.last_data
-    previous_dateutc = response["dateutc"]
     print(response)
     for key, value in response.items():
         if key in ["date", "dateutc", "loc", "tz"]:
@@ -83,6 +81,7 @@ device = get_device()
 set_up_guages(device)
 start_http_server(8000)
 
+previous_dateutc = ""
 while True:
     check_and_update(device)
     print("sleeping 60")
