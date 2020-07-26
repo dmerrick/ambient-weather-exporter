@@ -48,7 +48,7 @@ def get_device():
     return device
 
 
-#TODO: list of possible keys:
+# TODO: list of possible keys:
 #  https://github.com/ambient-weather/api-docs/wiki/Device-Data-Specs
 def set_up_guages():
     device = get_device()
@@ -78,6 +78,7 @@ def check_and_update(device):
             gauge.set(response[gauge._ambient_name])
     # store the time from the last response
     previous_dateutc = response["dateutc"]
+
 
 set_up_guages()
 start_http_server(8000)
