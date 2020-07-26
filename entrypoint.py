@@ -66,6 +66,7 @@ def check_and_update(device):
     global previous_dateutc
     # fetch the weather data
     response = device.last_data
+    print(response) # TODO: remove this
 
     # check if data is the same as last time
     if response["dateutc"] == previous_dateutc:
