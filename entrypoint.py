@@ -10,6 +10,7 @@ from prometheus_client import start_http_server
 
 api = AmbientAPI()
 gauges = []
+device = ""
 
 if not api.api_key:
     raise Exception("You must specify an API Key")
@@ -43,13 +44,14 @@ def get_device():
     # FIXME: handle multiple devices
     device = devices[0]
     # print(device.info)
-    # print(
-    #     device.mac_address
-    # )  # FIXME: add mac address as an instance parameter on all fields
+    # print(device.mac_address)
     return device
 
 
-def set_up_guages(device):
+#TODO: list of possible keys:
+#  https://github.com/ambient-weather/api-docs/wiki/Device-Data-Specs
+def set_up_guages():
+    device = get_device()
     response = device.last_data
     print(response)
     for key, value in response.items():
@@ -63,8 +65,8 @@ def set_up_guages(device):
 def check_and_update(device):
     global previous_dateutc
     # fetch the weather data
+    device = get_device()
     response = device.last_data
-    print(response) # TODO: remove this
 
     # check if data is the same as last time
     if response["dateutc"] == previous_dateutc:
@@ -77,13 +79,13 @@ def check_and_update(device):
     # store the time from the last response
     previous_dateutc = response["dateutc"]
 
-device = get_device()
-set_up_guages(device)
+set_up_guages()
 start_http_server(8000)
 
+# sleep to make the API happy
+time.sleep(1)
 previous_dateutc = ""
 while True:
     check_and_update(device)
     print("sleeping 60")
     time.sleep(60)
-
